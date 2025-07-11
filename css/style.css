@@ -73,6 +73,15 @@
 	cursor: pointer;
 	letter-spacing: 1px;
 }
+.side-bar .active a {
+	color: #127b8e !important;
+}
+.side-bar .active a i {
+	color: #127b8e !important;
+}
+.side-bar ul .active:hover {
+	background: transparent;
+}
 .side-bar ul li a i {
 	display: inline-block;
 	padding-right: 10px;
@@ -106,4 +115,78 @@
 .login-body form{
 	max-width:420px;
 	width: 90%;
+}
+
+.section-1 {
+	padding: 30px;
+}
+.section-1 .title {
+	margin-bottom: 10px;
+}
+.section-1 .title a {
+	text-decoration: none;
+	display: inline-block;
+	margin-bottom: 10px;
+	border: none;
+	background: #00cf22;
+	padding: 10px 15px;
+	color: #fff;
+	font-size: 16px;
+	border-radius: 5px;
+	cursor: pointer;
+	outline: none;
+	transition: background 1s;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.section-1{
+	width: 100%;
+	background: #ffe;
+}
+.section-1 .title a:hover {
+	opacity: 0.6;
+}
+.main-table, .main-table tr, .main-table th, .main-table td {
+	border: 1px solid #aaa;
+	border-collapse: collapse;
+	padding: 7px;
+}
+.main-table {
+	width: 90%;
+	margin-top: 30px;
+}
+.delete-btn {
+	text-decoration: none;
+	display: inline-block;
+	margin-bottom: 10px;
+	border: none;
+	background: #E00051;
+	padding: 10px 15px;
+	color: #fff;
+	font-size: 16px;
+	border-radius: 5px;
+	cursor: pointer;
+	outline: none;
+	transition: background 1s;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.delete-btn:hover {
+	opacity: 0.6;
+}
+.edit-btn {
+	text-decoration: none;
+	display: inline-block;
+	margin-bottom: 10px;
+	border: none;
+	background: #E00051;
+	padding: 10px 15px;
+	color: #fff;
+	font-size: 16px;
+	border-radius: 5px;
+	cursor: pointer;
+	outline: none;
+	transition: background 1s;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.edit-btn:hover {
+	opacity: 0.6;
 }

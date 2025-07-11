@@ -1,6 +1,6 @@
 <nav class="side-bar">
 			<div class="user-p">
-				<img src="img/user.png">
+				<img src="img/user.jpg">
 				<h4>@<?=$_SESSION['username']?></h4>
 			</div>
 			
@@ -50,7 +50,7 @@
 						<span>Dashboard</span>
 					</a>
 				</li>
-				<li>
+				<li class="active">
 					<a href="user.php">
 						<i class="fa fa-users" aria-hidden="true"></i>
 						<span>Manage Users</span>
