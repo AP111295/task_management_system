@@ -1,4 +1,9 @@
+<?php 
+session_start();
+if (isset($_SESSION['role']) && isset($_SESSION['id']) ) {
+?>
 <!DOCTYPE html>
+<!-- 29:03 -->
 <html>
 <head>
 	<title>Dashboard</title>
@@ -109,3 +114,9 @@
 
 </body>
 </html>
+<?php }else{ 
+   $em = "First login";
+   header("Location: login.php?error=$em");
+   exit();
+}
+ ?>
