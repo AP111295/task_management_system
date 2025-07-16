@@ -10,13 +10,14 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) ) {
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+	<!-- start at 1:03 -->
+	<!-- http://localhost/task_management_system/login.php  -->
 	<input type="checkbox" id="checkbox">
 	<?php include "inc/header.php"; ?>
 	
 	<div class="body">
 		<?php include "inc/nav.php"; ?>
-		<section class="section-1">
-			
+		<section class="section-1">	
 		</section>
 	</div>
 
