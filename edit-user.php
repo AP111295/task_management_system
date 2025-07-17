@@ -10,6 +10,10 @@ include "DB_connection.php";
     }
     $id = $_GET['id'];
 	$user = get_user_by_id($conn, $id);
+	if ($user == 0) {
+		header(("location: user.php"));
+		exit();
+	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -27,7 +31,7 @@ include "DB_connection.php";
 			<h4 class="title">Edit Users <a href="user.php">Users</a></h4>
             <form class="form-1"
                 method="POST"
-                action="app/add-user.php">
+                action="app/update-user.php">
                 <?php if (isset($_GET['error'])) {?>
       	  	<div class="danger" role="alert">
 			  <?php echo stripcslashes($_GET['error']); ?>
@@ -51,6 +55,7 @@ include "DB_connection.php";
 					<lable>Password</lable>
 					<input type="text" value="**********" name="password" class="input-1" placeholder="Password"><br>
 				</div>
+				<input type="text" name="id" value="<?=$user['id']?>" hidden>
                 <button class="edit-btn">Update</button>
             </form>
 		</section>

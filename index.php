@@ -10,7 +10,7 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) ) {
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-	<!-- start at 1:03 -->
+	<!-- start at 1:24-->
 	<!-- http://localhost/task_management_system/login.php  -->
 	<input type="checkbox" id="checkbox">
 	<?php include "inc/header.php"; ?>
@@ -20,7 +20,6 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) ) {
 		<section class="section-1">	
 		</section>
 	</div>
-
 </body>
 </html>
 <?php }else{ 

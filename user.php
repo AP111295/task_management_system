@@ -20,6 +20,11 @@ if (isset($_SESSION['role']) && isset($_SESSION['id']) ) {
 		<?php include "inc/nav.php"; ?>
 		<section class="section-1">
 			<h4 class="title">Manage Users <a href="add-user.php">Add User</a></h4>
+			 <?php if (isset($_GET['success'])) {?>
+      	  	<div class="success" role="alert">
+			  <?php echo stripcslashes($_GET['success']); ?>
+			</div>
+			<?php } ?>
 			<?php if ($users != 0){ ?>
 			<table class="main-table">
 				<tr>

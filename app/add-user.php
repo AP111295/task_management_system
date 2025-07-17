@@ -3,7 +3,7 @@
 session_start();
 if (isset($_SESSION['role']) && isset($_SESSION['id']) ) {
 // User is logged in, proceed with the page
-if (isset($_POST['user_name']) && isset($_POST['password']) && isset($_POST['full_name'])) {
+if (isset($_POST['user_name']) && isset($_POST['password']) && isset($_POST['full_name']) && $_SESSION['role'] == 'admin') {
     include "../DB_connection.php";
 
     function validate_input($data) {
