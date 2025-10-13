@@ -3,7 +3,7 @@
 session_start();
 if (isset($_SESSION['role']) && isset($_SESSION['id']) ) {
 // User is logged in, proceed with the page
-if (isset($_POST['user_name']) && isset($_POST['password']) && isset($_POST['full_name']) && $_SESSION['role'] == 'admin') {
+if (isset($_POST['user_name']) && isset($_POST['password']) && isset($_POST['full_name']) && isset($_POST['email']) && $_SESSION['role'] == 'admin') {
     include "../DB_connection.php";
 
     function validate_input($data) {
@@ -16,6 +16,7 @@ if (isset($_POST['user_name']) && isset($_POST['password']) && isset($_POST['ful
     $user_name = validate_input($_POST['user_name']);
 	$password = validate_input($_POST['password']);
 	$full_name = validate_input($_POST['full_name']);
+	$email = validate_input($_POST['email']);
 
    // Check if fields are empty
    if (empty($user_name)) {
@@ -30,17 +31,24 @@ if (isset($_POST['user_name']) && isset($_POST['password']) && isset($_POST['ful
 		$em = "Full name is required";
 	    header("Location: ../add-user.php?error=$em");
 	    exit();
+	}else if (empty($email)) {
+		$em = "Email is required";
+	    header("Location: ../add-user.php?error=$em");
+	    exit();
     } else {
-        // Check if user already exists
+        // Create user
         include "Model/User.php";
-        $password = password_hash($password, PASSWORD_DEFAULT); // Hash the password
-        $data = array($full_name, $user_name, $password, "employee"); // Assuming role is 'employee'
+        
+        // Hash password for database
+        $password = password_hash($password, PASSWORD_DEFAULT);
+        
+        $data = array($full_name, $email, $user_name, $password, "employee");
         insert_user($conn, $data);
 
         $em = "User created successfully";
-	    header("Location: ../add-user.php?success=$em");
-	    exit();
-	}
+        header("Location: ../add-user.php?success=$em");
+        exit();
+    }
 }else {
    $em = "Unknown error occurred";
    header("Location: ../add-user.php?error=$em");

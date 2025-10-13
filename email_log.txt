@@ -1,0 +1,57 @@
+=== EMAIL SIMULÉ ===
+De: taskmaster@company.com
+À: fleury.maxime8@gmail.com
+Sujet: Votre mot de passe a été modifié
+
+Bonjour Elias ARC,
+
+Votre mot de passe temporaire est : SEJ5FSFJI4
+
+Merci de le changer après connexion.
+
+Cordialement,
+Customer Service
+==================
+
+=== EMAIL SIMULÉ ===
+De: taskmaster@company.com
+À: fleury.maxime8@gmail.com
+Sujet: Votre mot de passe a été modifié
+
+Bonjour Elias ARC,
+
+Votre mot de passe temporaire est : PFg8tQ%c%V
+
+Merci de le changer après connexion.
+
+Cordialement,
+Customer Service
+==================
+
+2025-10-05 16:40:27 - Password reset email sent to: fleury.maxime8@gmail.com (User: Elias ARC)
+2025-10-05 16:42:31 - Password reset email sent to: fleury.maxime8@gmail.com (User: Elias ARC)
+2025-10-05 16:49:12 - Password reset email sent to: fleury.maxime8@gmail.com (User: Elias ARC)
+2025-10-05 17:09:33 - Password reset email sent to: fleury.maxime8@gmail.com (User: Elias ARC)
+2025-10-05 17:11:37 - Password reset email sent to: fleury.maxime8@gmail.com (User: Elias ARC)
+2025-10-05 17:13:57 - Password reset email sent to: fleury.maxime8@gmail.com (User: Elias ARC)
+2025-10-06 21:07:43 - Password reset email sent to: rana@gmail.com (User: Rana)
+2025-10-07 14:16:24 - Password reset email sent to: fleury.maxime8@gmail.com (User: Elias ARC)
+2025-10-07 14:19:39 - Password reset email sent to: rana@gmail.com (User: Rana)
+=== TEMPORARY PASSWORD EMAIL ===
+To: olivier@gmail.com
+Username: admin
+Temporary Password: IjyNY4EB
+Please use this temporary password to login, then change it from your profile.
+Time: 2025-10-07 17:19:24
+================================
+
+2025-10-07 17:21:59 - Password reset email sent to: rana@gmail.com (User: Rana)
+2025-10-07 17:25:21 - Password reset email sent to: olivier@gmail.com (User: Oliver)
+2025-10-07 18:30:30 - Password reset email sent to: olivier@gmail.com (User: Oliver)
+2025-10-12 22:16:31 - Email sending failed for: rana@gmail.com - Error: SMTP Error: Could not connect to SMTP host. Failed to connect to server SMTP server error: Failed to connect to server SMTP code: 10061 Additional SMTP info: No connection could be made because the target machine actively refused it
+2025-10-12 22:46:18 - Email sending failed for: rana@gmail.com - Error: SMTP Error: Could not connect to SMTP host. Failed to connect to server SMTP server error: Failed to connect to server SMTP code: 10061 Additional SMTP info: No connection could be made because the target machine actively refused it
+2025-10-12 22:46:21 - Email sending failed for: rana@gmail.com - Error: SMTP Error: Could not connect to SMTP host. Failed to connect to server SMTP server error: Failed to connect to server SMTP code: 10061 Additional SMTP info: No connection could be made because the target machine actively refused it
+2025-10-12 23:12:25 - Password reset email sent to: rana@gmail.com (User: Rana)
+2025-10-12 23:30:59 - Password reset email sent to: rana@gmail.com (User: Rana)
+2025-10-13 12:34:55 - Password reset email sent to: rana@gmail.com (User: Rana)
+2025-10-13 18:17:55 - Password reset email sent to: rana@gmail.com (User: Rana)
