@@ -2,7 +2,7 @@
 
 $sName = "localhost";
 $uName = "root";
-$pass  = "";
+$pass  = "StrongPassword123!";
 $db_name = "task_management_db";
 
 try {

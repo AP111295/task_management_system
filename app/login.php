@@ -14,10 +14,8 @@ function validate_input($data) {
 
 // Check if all required fields are submitted
 if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['captcha_answer'])) {
-    
     // Verify CSRF token
     verify_csrf_token();
-    
     $username = validate_input($_POST['username']);
     $password = validate_input($_POST['password']);
     $captcha_answer = validate_input($_POST['captcha_answer']);

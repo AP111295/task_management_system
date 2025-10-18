@@ -780,10 +780,16 @@ if (isset($_SESSION['role']) && isset($_SESSION['id'])) {
 			</style>
 		</head>
 
+
+
+
 		<body>
-			<input type="checkbox" id="checkbox">
-			<?php include "inc/header.php"; ?>
+			<input type="checkbox" id="checkbox" style="display:none;">
+			<label for="checkbox" class="menu-toggle">
+				<i class="fa fa-bars"></i>
+			</label>
 			<?php include "inc/nav.php"; ?>
+			<?php include "inc/header.php"; ?>
 
 			<div class="body">
 				<section class="section-1">
@@ -1173,112 +1179,6 @@ if (isset($_SESSION['role']) && isset($_SESSION['id'])) {
 							document.getElementById('taskModal').style.display = 'none';
 						}
 
-						// AJAX Task Creation - No Page Reload
-						function submitTaskForm(event) {
-							event.preventDefault(); // Prevent traditional form submission
-							
-							const form = event.target;
-							const formData = new FormData(form);
-							const submitButton = form.querySelector('.btn-primary');
-							const originalText = submitButton.innerHTML;
-							
-							// Show loading state
-							submitButton.innerHTML = '⏳ Creating Task...';
-							submitButton.disabled = true;
-							
-							// Make AJAX request
-							fetch('app/add-task.php', {
-								method: 'POST',
-								body: formData,
-								headers: {
-									'X-Requested-With': 'XMLHttpRequest'
-								}
-							})
-							.then(response => response.json())
-							.then(result => {
-								if (result.success) {
-									// Show success message
-									showNotification('✅ ' + result.message, 'success');
-									
-									// Close modal
-									closeTaskModal();
-									
-									// Reset form
-									form.reset();
-									
-									// Update task counts dynamically (optional)
-									updateTaskCounts();
-									
-									// If the user's tasks are currently expanded, refresh them
-									const userId = formData.get('assigned_to');
-									const tasksRow = document.getElementById('tasks-' + userId);
-									if (tasksRow && tasksRow.classList.contains('show')) {
-										loadUserTasks(userId);
-									}
-									
-									// Update mobile view if visible
-									const mobileTasksContainer = document.getElementById('mobile-tasks-' + userId);
-									if (mobileTasksContainer && mobileTasksContainer.classList.contains('show')) {
-										loadMobileUserTasks(userId);
-									}
-									
-								} else {
-									// Show error message
-									showNotification('❌ ' + result.message, 'error');
-								}
-							})
-							.catch(error => {
-								console.error('Error:', error);
-								showNotification('❌ Network error occurred', 'error');
-							})
-							.finally(() => {
-								// Reset button state
-								submitButton.innerHTML = originalText;
-								submitButton.disabled = false;
-							});
-						}
-						
-						// Show notification function
-						function showNotification(message, type) {
-							// Create notification element
-							const notification = document.createElement('div');
-							notification.className = `alert alert-${type === 'success' ? 'success' : 'danger'}`;
-							notification.style.cssText = `
-								position: fixed;
-								top: 20px;
-								right: 20px;
-								z-index: 9999;
-								padding: 15px 20px;
-								border-radius: 8px;
-								box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-								animation: slideInRight 0.3s ease;
-								max-width: 400px;
-							`;
-							notification.innerHTML = message;
-							
-							// Add to page
-							document.body.appendChild(notification);
-							
-							// Remove after 5 seconds
-							setTimeout(() => {
-								notification.style.animation = 'slideOutRight 0.3s ease';
-								setTimeout(() => {
-									if (notification.parentNode) {
-										document.body.removeChild(notification);
-									}
-								}, 300);
-							}, 5000);
-						}
-						
-						// Update task counts without page reload
-						function updateTaskCounts() {
-							// This would require a separate API endpoint to get updated counts
-							// For now, we'll just reload the page after a short delay to show the new task
-							setTimeout(() => {
-								location.reload();
-							}, 1500);
-						}
-
 						// Close modal when clicking outside
 						window.onclick = function(event) {
 							const modal = document.getElementById('taskModal');
@@ -1286,14 +1186,6 @@ if (isset($_SESSION['role']) && isset($_SESSION['id'])) {
 								closeTaskModal();
 							}
 						}
-						
-						// Initialize AJAX form submission
-						document.addEventListener('DOMContentLoaded', function() {
-							const taskForm = document.querySelector('#taskModal form');
-							if (taskForm) {
-								taskForm.addEventListener('submit', submitTaskForm);
-							}
-						});
 					</script>
 				</section>
 			</div>

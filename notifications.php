@@ -1,10 +1,77 @@
 <?php 
 session_start();
+include "DB_connection.php";
+
+// --- Check for required columns ---
+$required_columns = ['status', 'processed_at'];
+$missing_columns = [];
+try {
+    $structure = $conn->query("DESCRIBE notifications");
+    $columns = [];
+    while ($row = $structure->fetch()) {
+        $columns[] = $row['Field'];
+    }
+    foreach ($required_columns as $col) {
+        if (!in_array($col, $columns)) {
+            $missing_columns[] = $col;
+        }
+    }
+} catch (PDOException $e) {
+    echo "<p style='color:red;'>❌ Error checking table structure: " . $e->getMessage() . "</p>";
+}
+
+if (!empty($missing_columns)) {
+    echo "<div style='background:#fff3cd;color:#856404;padding:15px;border-radius:8px;margin:20px 0;'>";
+    echo "⚠️ Missing columns in <b>notifications</b> table: <b>" . implode(', ', $missing_columns) . "</b><br>";
+    echo "Run this SQL in phpMyAdmin or MySQL CLI to fix:<br><pre style='background:#f8f9fa;padding:10px;border-radius:6px;'>";
+    foreach ($missing_columns as $col) {
+        if ($col == 'status') {
+            echo "ALTER TABLE notifications ADD COLUMN status VARCHAR(20) NOT NULL DEFAULT 'pending';\n";
+        }
+        if ($col == 'processed_at') {
+            echo "ALTER TABLE notifications ADD COLUMN processed_at DATETIME NULL;\n";
+        }
+    }
+    echo "</pre></div>";
+    exit;
+}
+
+// --- Handle processing a notification ---
+if (isset($_GET['process']) && isset($_GET['id']) && $_SESSION['role'] == 'admin') {
+    $notification_id = intval($_GET['id']);
+    try {
+        // Update status and log processed time
+        $sql = "UPDATE notifications SET status = 'processed', processed_at = NOW() WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$notification_id]);
+        header("Location: notifications.php?success=Notification+processed+successfully");
+        exit();
+    } catch (PDOException $e) {
+        header("Location: notifications.php?error=" . urlencode($e->getMessage()));
+        exit();
+    }
+}
+
+// --- Test notification insertion ---
+if (isset($_GET['test']) && $_GET['test'] == 1) {
+    // Adjust columns to match your notifications table!
+    $sql = "INSERT INTO notifications (username, user_id, email, reason, status, created_at) VALUES (?, ?, ?, ?, ?, ?)";
+    $params = ["TestUser", 1, "test@example.com", "Test notification", "pending", date('Y-m-d H:i:s')];
+
+    try {
+        $stmt = $conn->prepare($sql);
+        $stmt->execute($params);
+        // Redirect to show the new notification immediately
+        header("Location: notifications.php?success=Test+notification+inserted%21");
+        exit();
+    } catch (PDOException $e) {
+        echo "<p style='color:red;'>❌ Error: " . $e->getMessage() . "</p>";
+    }
+}
+
 if (isset($_SESSION['role']) && isset($_SESSION['id'])) {
     if ($_SESSION['role'] == 'admin') {
-        include "DB_connection.php";
-        
-        // Préparer la requête sans debug pour le moment
+        // ...existing code...
         try {
             $notifications_query = "SELECT * FROM notifications ORDER BY id DESC";
             $notifications_result = $conn->query($notifications_query);
@@ -361,7 +428,6 @@ if (isset($_SESSION['role']) && isset($_SESSION['id'])) {
                     </thead>
                     <tbody>
                         <?php 
-                        $notifications_result->execute(); // Reset the result pointer
                         while($notification = $notifications_result->fetch()) { ?>
                         <tr>
                             <td>
@@ -382,12 +448,19 @@ if (isset($_SESSION['role']) && isset($_SESSION['id'])) {
                                     } else {
                                         echo 'N/A';
                                     }
+                                    // Show processed time if available
+                                    if (isset($notification['processed_at']) && $notification['status'] == 'processed') {
+                                        echo "<br><span style='color:green;'>Processed: " . date('M d, Y H:i', strtotime($notification['processed_at'])) . "</span>";
+                                    }
                                     ?>
                                 </div>
                             </td>
                             <td>
-                                <?php if ($notification['status'] == 'pending') { ?>
-                                <a href="reset-password.php?type=admin&notification_id=<?= $notification['id'] ?>&username=<?= urlencode($notification['username'] ?? '') ?>" 
+                                <?php 
+                                // Safely check status
+                                $status = isset($notification['status']) ? $notification['status'] : 'pending';
+                                if ($status == 'pending') { ?>
+                                <a href="notifications.php?process=1&id=<?= $notification['id'] ?>" 
                                    class="process-btn">
                                     🔧 Process
                                 </a>
@@ -403,8 +476,9 @@ if (isset($_SESSION['role']) && isset($_SESSION['id'])) {
                 <!-- Mobile Card View -->
                 <div class="mobile-cards">
                     <?php 
-                    $notifications_result->execute(); // Reset the result pointer again for mobile cards
-                    while($notification = $notifications_result->fetch()) { ?>
+                    // Instead, re-query for mobile cards:
+                    $notifications_result_mobile = $conn->query("SELECT * FROM notifications ORDER BY id DESC");
+                    while($notification = $notifications_result_mobile->fetch()) { ?>
                     <div class="notification-card">
                         <div class="card-header">
                             <div class="card-user">
@@ -418,6 +492,9 @@ if (isset($_SESSION['role']) && isset($_SESSION['id'])) {
                                     echo date('M d, Y', strtotime($notification['created_at']));
                                 } else {
                                     echo 'N/A';
+                                }
+                                if (isset($notification['processed_at']) && $notification['status'] == 'processed') {
+                                    echo "<br><span style='color:green;'>Processed: " . date('M d, Y H:i', strtotime($notification['processed_at'])) . "</span>";
                                 }
                                 ?>
                             </div>
@@ -436,8 +513,10 @@ if (isset($_SESSION['role']) && isset($_SESSION['id'])) {
                         </div>
                         
                         <div class="card-actions">
-                            <?php if ($notification['status'] == 'pending') { ?>
-                            <a href="reset-password.php?type=admin&notification_id=<?= $notification['id'] ?>&username=<?= urlencode($notification['username'] ?? '') ?>" 
+                            <?php 
+                            $status = isset($notification['status']) ? $notification['status'] : 'pending';
+                            if ($status == 'pending') { ?>
+                            <a href="notifications.php?process=1&id=<?= $notification['id'] ?>" 
                                class="process-btn">
                                 <i class="fa fa-cog"></i> Process Request
                             </a>

@@ -1,0 +1,26 @@
+# env file for Task Management System
+DB_HOST=localhost
+DB_USERNAME=root
+DB_PASSWORD=StrongPassword123!
+DB_NAME=task_management_db
+APP_NAME=Task Management System
+APP_ENV=development
+APP_DEBUG=true
+APP_URL=http://localhost
+APP_TIMEZONE=UTC
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=
+MAIL_PASSWORD=
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=noreply@taskmanager.com
+MAIL_FROM_NAME=Task Management System
+FORCE_HTTPS=false
+SESSION_SECURE=false
+CSRF_TOKEN_LIFETIME=3600
+SESSION_LIFETIME=1800
+MAX_LOGIN_ATTEMPTS=5
+LOCKOUT_DURATION=900
+MAX_FILE_SIZE=2097152
+ALLOWED_FILE_TYPES=jpg,jpeg,png,gif
+UPLOAD_PATH=uploads/profiles/

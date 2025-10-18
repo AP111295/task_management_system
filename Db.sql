@@ -16,7 +16,6 @@ CREATE TABLE users (
     INDEX idx_email (email),
     INDEX idx_role (role)
 );
-
 -- TASKS TABLE
 CREATE TABLE tasks (
     id INT AUTO_INCREMENT PRIMARY KEY,
